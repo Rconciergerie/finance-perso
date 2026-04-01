@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Finance Perso — Vincent</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -41,13 +41,14 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 15px; }
+html { font-size: 15px; overflow-x: hidden; }
 body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* ── LAYOUT ── */
@@ -471,10 +472,16 @@ tbody td { padding: 11px 16px; font-size: 13.5px; color: var(--text); }
 }
 @media (max-width: 480px) {
   .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .form-grid { grid-template-columns: 1fr !important; }
   .form-grid-3 { grid-template-columns: 1fr; }
   .compte-cards { grid-template-columns: repeat(2, 1fr); }
   .filters { flex-direction: column; }
-  .filter-search { min-width: 0; }
+  .filter-search { min-width: 0; width: 100%; }
+  .type-select { grid-template-columns: repeat(3, 1fr); }
+  .page { padding: 12px; }
+  .card { padding: 16px; }
+  .topbar { padding: 0 12px; }
+  .month-picker .label { min-width: 90px; font-size: 12px; }
 }
 
 /* ── DASHBOARD TABS ── */
@@ -614,9 +621,9 @@ tbody td { padding: 11px 16px; font-size: 13.5px; color: var(--text); }
       <div class="dash-panel active" id="dtab-global">
         <div class="kpi-grid">
           <div class="kpi accent-bg">
-            <div class="kpi-label">Solde total</div>
+            <div class="kpi-label">Solde cumulé</div>
             <div class="kpi-value" id="kpi-total">—</div>
-            <div class="kpi-sub">Tous comptes confondus</div>
+            <div class="kpi-sub">Toutes transactions jusqu'à fin du mois</div>
           </div>
           <div class="kpi">
             <div class="kpi-label">Revenus du mois</div>
@@ -1100,7 +1107,18 @@ const MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','A
 let state = {
   config: { scriptUrl: '' },
   transactions: [],
-  comptes: [],
+  comptes: [
+    { Nom: 'Boursorama',    Type: 'courant',        SoldeInitial: 0, SoldeActuel: 0, Ordre: 1 },
+    { Nom: 'PayPal',        Type: 'courant',        SoldeInitial: 0, SoldeActuel: 0, Ordre: 2 },
+    { Nom: 'Fortuneo',      Type: 'courant',        SoldeInitial: 0, SoldeActuel: 0, Ordre: 3 },
+    { Nom: 'Fortuneo PEA',  Type: 'investissement', SoldeInitial: 0, SoldeActuel: 0, Ordre: 4 },
+    { Nom: 'LCL Courant',   Type: 'courant',        SoldeInitial: 0, SoldeActuel: 0, Ordre: 5 },
+    { Nom: 'LCL Joint',     Type: 'courant',        SoldeInitial: 0, SoldeActuel: 0, Ordre: 6 },
+    { Nom: 'LCL Appart',    Type: 'courant',        SoldeInitial: 0, SoldeActuel: 0, Ordre: 7 },
+    { Nom: 'LCL Auto',      Type: 'courant',        SoldeInitial: 0, SoldeActuel: 0, Ordre: 8 },
+    { Nom: 'LCL Livret A',  Type: 'epargne',        SoldeInitial: 0, SoldeActuel: 0, Ordre: 9 },
+    { Nom: 'LCL LDD',       Type: 'epargne',        SoldeInitial: 0, SoldeActuel: 0, Ordre: 10 },
+  ],
   categories: [],
   recurrences: [],
   investissements: [],
@@ -1469,8 +1487,11 @@ function renderDashImmo() {
 function renderDashboard() {
   const txMonth = getMonthTransactions(currentMonth, currentYear);
   
-  // Solde total
-  const totalAll = state.comptes.reduce((s, c) => s + (parseFloat(c.SoldeActuel)||0), 0);
+  // Solde cumulé : somme de toutes les transactions jusqu'à la fin du mois sélectionné
+  const endOfMonth = new Date(currentYear, currentMonth + 1, 0, 23, 59, 59);
+  const totalAll = state.transactions
+    .filter(t => t.Date && new Date(t.Date) <= endOfMonth)
+    .reduce((s, t) => s + (parseFloat(t.MontantCalcule) || 0), 0);
   document.getElementById('kpi-total').textContent = fmtSimple(totalAll);
 
   // Revenus / dépenses mois
@@ -1644,6 +1665,20 @@ function updateSousCats() {
   if (!sub) return;
   const subs = state.categories.filter(c => c.Categorie === cat).map(c => c.SousCategorie).filter(Boolean);
   sub.innerHTML = '<option value="">—</option>' + subs.map(s => `<option>${s}</option>`).join('');
+
+  // Si catégorie "À deux" : cocher automatiquement et masquer la case (elle est implicite)
+  const toggleAdeux = document.getElementById('toggle-adeux');
+  const cbAdeux = document.getElementById('f-adeux');
+  const isAdeux = cat === 'À deux' || cat === 'A deux';
+  if (toggleAdeux && cbAdeux) {
+    if (isAdeux) {
+      cbAdeux.checked = true;
+      document.getElementById('adeux-preview').textContent = '';
+      toggleAdeux.style.display = 'none';
+    } else {
+      toggleAdeux.style.display = '';
+    }
+  }
 }
 
 document.getElementById('f-montant')?.addEventListener('input', function() {
