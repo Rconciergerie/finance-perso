@@ -168,9 +168,13 @@ const APP = {
         const hhmm = new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
         statusEl.textContent = '● Connecté · ' + hhmm;
         document.getElementById('p-script-url').value = url;
+        const resEl = document.getElementById('p-sync-result');
+        if (resEl) resEl.innerHTML = '<span style="color:var(--green)">✓ Données chargées depuis Google Sheets · ' + hhmm + '</span>';
       } else if (result.status === 'ok' && !result.data) {
         // Sheets vide → on pousse nos données locales
         statusEl.textContent = '● Connecté (init)';
+        const resEl = document.getElementById('p-sync-result');
+        if (resEl) resEl.innerHTML = '<span style="color:var(--green)">✓ Connecté — envoi initial des données en cours...</span>';
         this.pushToSheets();
       } else {
         statusEl.textContent = '⚠ Erreur Sheets';
@@ -196,6 +200,8 @@ const APP = {
       if (result.status === 'ok') {
         const hhmm = new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
         statusEl.textContent = '● Connecté · ' + hhmm;
+        const resEl = document.getElementById('p-sync-result');
+        if (resEl) resEl.innerHTML = '<span style="color:var(--green)">✓ Sync Google Sheets · ' + hhmm + '</span>';
       } else {
         statusEl.textContent = '⚠ Erreur sync';
         console.warn('Sheets sync error:', result);
