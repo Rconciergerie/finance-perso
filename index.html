@@ -245,6 +245,7 @@
           <button class="btn btn-secondary btn-sm" onclick="APP.exportJSON()">&#x2193; Exporter JSON</button>
           <button class="btn btn-secondary btn-sm" onclick="APP.triggerImport()">&#x2191; Importer JSON</button>
           <button class="btn btn-secondary btn-sm" onclick="APP.syncGSheets()">↻ Sync Google Sheets</button>
+          <button class="btn btn-sm" style="background:#FEF2F2;color:#DC2626;border:1px solid #FECACA" onclick="APP.resetToDefaults()">⚠ Réinitialiser les données</button>
         </div>
         <input type="file" id="import-file" style="display:none" accept=".json" onchange="APP.importJSON(event)">
       </div>
