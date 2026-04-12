@@ -290,8 +290,8 @@ const APP = {
   getTxForMonth(m,a) { return this.data.transactions.filter(t=>t.mois==m&&t.annee==a); },
   getRevenus(txs) { return txs.filter(t=>t.type==='revenu').reduce((s,t)=>s+t.montant*t.part/100,0); },
   getDepenses(txs) { return txs.filter(t=>t.type==='depense').reduce((s,t)=>s+t.montant*t.part/100,0); },
-  getTotalLiquidites() { 
-    return this.data.comptes.filter(c=>c.type!=='investissement').reduce((s,c)=>s+c.solde,0); 
+  getTotalLiquidites() {
+    return this.data.comptes.reduce((s,c)=>s+c.solde,0);
   },
   getCatColor(cat, sousCat) {
     const c = this.data.categories.find(c=>c.categorie===cat&&c.sousCategorie===sousCat);
@@ -325,7 +325,7 @@ const APP = {
       <div class="card kpi">
         <div class="kpi-label">Liquidités totales</div>
         <div class="kpi-value">${this.fmtSimple(liq)}</div>
-        <div class="kpi-sub">Hors PEA &amp; investissements</div>
+        <div class="kpi-sub">Tous comptes PEA inclus</div>
       </div>
       <div class="card kpi">
         <div class="kpi-label">Revenus ${this.monthLabel(mois,annee)}</div>
@@ -369,7 +369,7 @@ const APP = {
     for(let i=11;i>=0;i--) {
       let m = new Date(); m.setMonth(m.getMonth()-i);
       const mo=m.getMonth()+1, yr=m.getFullYear();
-      const soldes = this.data.soldesMensuels.filter(s=>s.mois===mo&&s.annee===yr&&s.compte!=='Fortuneo PEA');
+      const soldes = this.data.soldesMensuels.filter(s=>s.mois===mo&&s.annee===yr&&true);
       const total = soldes.reduce((sum,s)=>sum+s.solde,0);
       months.push(this.monthLabel(mo,yr));
       values.push(total>0?total:null);
@@ -428,7 +428,7 @@ const APP = {
     for(let i=11;i>=0;i--){
       let d=new Date(); d.setMonth(d.getMonth()-i);
       const mo=d.getMonth()+1,yr=d.getFullYear();
-      const soldes=this.data.soldesMensuels.filter(s=>s.mois===mo&&s.annee===yr&&s.compte!=='Fortuneo PEA');
+      const soldes=this.data.soldesMensuels.filter(s=>s.mois===mo&&s.annee===yr&&true);
       const t=soldes.reduce((s,x)=>s+x.solde,0);
       months.push(this.monthLabel(mo,yr)); totals.push(t>0?t:null);
     }
