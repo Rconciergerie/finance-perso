@@ -244,7 +244,8 @@
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <button class="btn btn-secondary btn-sm" onclick="APP.exportJSON()">&#x2193; Exporter JSON</button>
           <button class="btn btn-secondary btn-sm" onclick="APP.triggerImport()">&#x2191; Importer JSON</button>
-          <button class="btn btn-secondary btn-sm" onclick="APP.syncGSheets()">↻ Sync Google Sheets</button>
+          <button class="btn btn-secondary btn-sm" onclick="APP.pushToSheetsManual()">↑ Pousser vers Sheets</button>
+          <button class="btn btn-secondary btn-sm" onclick="APP.pullFromSheetsManual()">↓ Charger depuis Sheets</button>
           <button class="btn btn-sm" style="background:#FEF2F2;color:#DC2626;border:1px solid #FECACA" onclick="APP.resetToDefaults()">⚠ Réinitialiser les données</button>
         </div>
         <input type="file" id="import-file" style="display:none" accept=".json" onchange="APP.importJSON(event)">
@@ -298,20 +299,20 @@
         <div class="form-group"><label>Date</label><input type="date" id="tx-date"></div>
       </div>
       <div class="form-group"><label>Libellé</label><input type="text" id="tx-libelle" placeholder="Description..."></div>
-      <div class="form-row">
+      <div class="form-row" id="tx-comptes-row">
         <div class="form-group"><label id="tx-compte-label">Compte</label><select id="tx-compte"></select></div>
-        <div class="form-group" id="tx-compte-dest-group" style="display:none"><label>Compte destinataire</label><select id="tx-compte-dest"></select></div>
         <div class="form-group" id="tx-montant-group"><label>Montant (€)</label><input type="number" id="tx-montant" step="0.01" placeholder="0.00"></div>
       </div>
+      <div class="form-group" id="tx-compte-dest-group" style="display:none"><label>Compte destinataire</label><select id="tx-compte-dest"></select></div>
       <div id="tx-cat-row" class="form-row">
         <div class="form-group"><label>Catégorie</label><select id="tx-categorie" onchange="APP.updateSousCats()"></select></div>
         <div class="form-group"><label>Sous-catégorie</label><select id="tx-sous-categorie"></select></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label>Part (%)</label><input type="number" id="tx-part" value="100" min="0" max="100" step="1"></div>
-        <div class="form-group" style="display:flex;align-items:flex-end;gap:8px">
-          <input type="checkbox" id="tx-recurrent" style="width:auto;margin-right:4px">
-          <label for="tx-recurrent" style="cursor:pointer;margin-bottom:0;font-weight:400">Récurrent</label>
+        <div class="form-group" style="display:flex;align-items:center;gap:10px;padding-top:20px">
+          <input type="checkbox" id="tx-recurrent" style="width:16px;height:16px;cursor:pointer;accent-color:var(--blue)">
+          <label for="tx-recurrent" style="cursor:pointer;margin-bottom:0;font-size:13px;font-weight:500;color:var(--text-1)">Récurrent</label>
         </div>
       </div>
     </div>
