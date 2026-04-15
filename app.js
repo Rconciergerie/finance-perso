@@ -91,7 +91,48 @@ const DEFAULT_SOLDES_MENSUELS = [
   {compte:"N26",          mois:1, annee:2026, solde:103.58},
 ];
 
-const DEFAULT_CHARGES_RECURRENTES = [];
+const DEFAULT_CHARGES_RECURRENTES = [
+  // 2 PIÈCES
+  {id:'cr01',libelle:'Crédit 2 pièces',              montant:560,   compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'2 pièces crédit',  attribution:'2 pièces',            part:100, actif:true},
+  {id:'cr02',libelle:'Assurance crédit 2 pièces',    montant:14.27, compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'2 pièces charges', attribution:'2 pièces',            part:100, actif:true},
+  {id:'cr03',libelle:'PNO 2 pièces',                 montant:15.30, compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'2 pièces charges', attribution:'2 pièces',            part:100, actif:true},
+  {id:'cr04',libelle:'Charges 2 pièces',             montant:72.50, compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'2 pièces charges', attribution:'2 pièces',            part:100, actif:true},
+  {id:'cr05',libelle:'Taxe foncière 2 pièces',       montant:102,   compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'2 pièces charges', attribution:'2 pièces',            part:100, actif:true},
+  {id:'cr06',libelle:'Compta 2 pièces',              montant:13.75, compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'2 pièces charges', attribution:'2 pièces',            part:100, actif:true},
+  {id:'cr07',libelle:'CFE 2 pièces',                 montant:14,    compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'2 pièces charges', attribution:'2 pièces',            part:100, actif:true},
+  // STUDIO AIRBNB
+  {id:'cr08',libelle:'Crédit studio',                montant:498.62,compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'Studio crédit',    attribution:'Studio Airbnb',       part:100, actif:true},
+  {id:'cr09',libelle:'Free studoz + Sosh',           montant:67.13, compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'Studio charges',   attribution:'Studio Airbnb',       part:100, actif:true},
+  {id:'cr10',libelle:'Charges studio syndic immo',   montant:72.22, compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'Studio charges',   attribution:'Studio Airbnb',       part:100, actif:true},
+  {id:'cr11',libelle:'Assurance crédit studio Caci', montant:19.63, compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'Studio charges',   attribution:'Studio Airbnb',       part:100, actif:true},
+  {id:'cr12',libelle:'Taxe foncière studio',         montant:82,    compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'Studio charges',   attribution:'Studio Airbnb',       part:100, actif:true},
+  {id:'cr13',libelle:'Igloo',                        montant:1.71,  compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'Studio charges',   attribution:'Studio Airbnb',       part:100, actif:true},
+  {id:'cr14',libelle:'Superhote',                    montant:57,    compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'Studio charges',   attribution:'Studio Airbnb',       part:100, actif:true},
+  {id:'cr15',libelle:'Passurances PNO studio',       montant:15,    compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'Studio charges',   attribution:'Studio Airbnb',       part:100, actif:true},
+  {id:'cr16',libelle:'Compta studio',                montant:13.75, compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'Studio charges',   attribution:'Studio Airbnb',       part:100, actif:true},
+  {id:'cr17',libelle:'CFE studio',                   montant:14,    compte:'LCL Appart',  categorie:'Immobilier', sousCategorie:'Studio charges',   attribution:'Studio Airbnb',       part:100, actif:true},
+  // RÉSIDENCE PRINCIPALE (part 50% — partagée)
+  {id:'cr18',libelle:'Crédit maison',                montant:869.93,compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Résidence principale', attribution:'Résidence principale', part:50, actif:true},
+  {id:'cr19',libelle:'Assurance prêt immo maison',   montant:10.13, compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Résidence principale', attribution:'Résidence principale', part:50, actif:true},
+  {id:'cr20',libelle:'Assurance MRH Gretz',          montant:24.10, compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Résidence principale', attribution:'Résidence principale', part:50, actif:true},
+  {id:'cr21',libelle:'Assurance crédit Mimi',        montant:11.21, compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Résidence principale', attribution:'Résidence principale', part:50, actif:true},
+  {id:'cr22',libelle:'EDF/GDF maison',               montant:155,   compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Résidence principale', attribution:'Résidence principale', part:50, actif:true},
+  {id:'cr23',libelle:'Charges maison',               montant:143.93,compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Résidence principale', attribution:'Résidence principale', part:50, actif:true},
+  {id:'cr24',libelle:'Orange',                       montant:24.99, compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Résidence principale', attribution:'Résidence principale', part:50, actif:true},
+  {id:'cr25',libelle:'Taxe foncière maison',         montant:121,   compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Résidence principale', attribution:'Résidence principale', part:50, actif:true},
+  // PERSONNEL
+  {id:'cr26',libelle:'Crédit Tesla',                 montant:145.08,compte:'LCL Auto',    categorie:'Personnel',  sousCategorie:'Transport',        attribution:'Personnel',           part:100, actif:true},
+  {id:'cr27',libelle:'Assurance Tesla',              montant:64.99, compte:'LCL Auto',    categorie:'Personnel',  sousCategorie:'Transport',        attribution:'Personnel',           part:100, actif:true},
+  {id:'cr28',libelle:'Mutuelle pour Mimi',           montant:27.39, compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Santé',            attribution:'Personnel',           part:100, actif:true},
+  {id:'cr29',libelle:'YouTube Premium',              montant:5.75,  compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Abonnements',      attribution:'Personnel',           part:100, actif:true},
+  {id:'cr30',libelle:'Bouygues',                     montant:8.99,  compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Abonnements',      attribution:'Personnel',           part:100, actif:true},
+  {id:'cr31',libelle:'Spotify',                      montant:21.24, compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Abonnements',      attribution:'Personnel',           part:100, actif:true},
+  {id:'cr32',libelle:'Basic Fit',                    montant:32.49, compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Loisirs',          attribution:'Personnel',           part:100, actif:true},
+  {id:'cr33',libelle:'iCloud perso',                 montant:9.99,  compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Abonnements',      attribution:'Personnel',           part:100, actif:true},
+  {id:'cr34',libelle:'iCloud maman',                 montant:0.99,  compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Abonnements',      attribution:'Personnel',           part:100, actif:true},
+  {id:'cr35',libelle:'Xbox Live',                    montant:8.99,  compte:'LCL Courant', categorie:'Personnel',  sousCategorie:'Loisirs',          attribution:'Personnel',           part:100, actif:true},
+  {id:'cr36',libelle:'Impôts LMNP',                  montant:26,    compte:'LCL Courant', categorie:'Immobilier', sousCategorie:'Immobilier',       attribution:'Personnel',           part:100, actif:true},
+];
 // Structure d'une charge : {id, libelle, montant, compte, categorie, sousCategorie, attribution, part, actif}
 // attribution: 'Personnel' | 'Studio Airbnb' | '2 pièces' | 'Résidence principale' | 'À deux'
 // part: 0-100 (% à ma charge)
@@ -533,6 +574,13 @@ const APP = {
   renderCharges() {
     const charges = this.data.chargesRecurrentes;
     const {mois, annee} = this.state;
+
+    // Auto-génération si aucune charge récurrente pour ce mois
+    const dejaGenerees = this.data.transactions.filter(t => t.mois===mois && t.annee===annee && t.recurrent && t.chargeId);
+    if (dejaGenerees.length === 0 && charges.filter(c=>c.actif).length > 0) {
+      this.generateMonthCharges();
+      return; // renderCharges sera rappelé après génération
+    }
 
     // KPIs
     const actives = charges.filter(c => c.actif);
